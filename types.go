@@ -15,6 +15,8 @@ type (
 	SessionManager    *ManagedObjectReference
 	PropertyCollector *ManagedObjectReference
 	ServiceInstance   *ManagedObjectReference
+	Folder            *ManagedObjectReference
+	Task              *ManagedObjectReference
 )
 
 type RetrieveServiceContent struct {
@@ -27,7 +29,7 @@ type RetrieveServiceContentResponse struct {
 }
 
 type ServiceContent struct {
-	RootFolder        *ManagedObjectReference `xml:"rootFolder"`
+	RootFolder        Folder                  `xml:"rootFolder"`
 	AccountManager    *ManagedObjectReference `xml:"accountManager"`
 	ViewManager       *ManagedObjectReference `xml:"viewManager"`
 	PropertyCollector PropertyCollector       `xml:"propertyCollector"`
@@ -168,10 +170,15 @@ type PowerOnVM_Task struct {
 }
 
 type PowerOnVm_TaskResponse struct {
-	Task *ManagedObjectReference `xml:"returnval"`
+	Task Task `xml:"returnval"`
 }
 
+// http://pubs.vmware.com/vsphere-55/index.jsp?topic=%2Fcom.vmware.wssdk.apiref.doc%2Fvim.VirtualMachine.html
 type PowerOffVM_Task struct {
-	XMLName xml.Name                `xml:"urn:vim25 PowerOffVM_Task"`
-	This    *ManagedObjectReference `xml:"_this"`
+	XMLName xml.Name       `xml:"urn:vim25 PowerOffVM_Task"`
+	This    VirtualMachine `xml:"_this"`
+}
+
+type PowerOffVm_TaskResponse struct {
+	Task Task `xml:"returnval"`
 }
