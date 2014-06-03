@@ -10,9 +10,16 @@ type ManagedObjectReference struct {
 	Value string `xml:",chardata"`
 }
 
+type (
+	VirtualMachine    *ManagedObjectReference
+	SessionManager    *ManagedObjectReference
+	PropertyCollector *ManagedObjectReference
+	ServiceInstance   *ManagedObjectReference
+)
+
 type RetrieveServiceContent struct {
-	XMLName xml.Name                `xml:"urn:vim25 RetrieveServiceContent"`
-	This    *ManagedObjectReference `xml:"_this"`
+	XMLName xml.Name        `xml:"urn:vim25 RetrieveServiceContent"`
+	This    ServiceInstance `xml:"_this"`
 }
 
 type RetrieveServiceContentResponse struct {
@@ -22,14 +29,14 @@ type RetrieveServiceContentResponse struct {
 type ServiceContent struct {
 	RootFolder        *ManagedObjectReference `xml:"rootFolder"`
 	AccountManager    *ManagedObjectReference `xml:"accountManager"`
-	PropertyCollector *ManagedObjectReference `xml:"propertyCollector"`
 	ViewManager       *ManagedObjectReference `xml:"viewManager"`
-	SessionManager    *ManagedObjectReference `xml:"sessionManager"`
+	PropertyCollector PropertyCollector       `xml:"propertyCollector"`
+	SessionManager    SessionManager          `xml:"sessionManager"`
 }
 
 type CurrentTime struct {
-	XMLName xml.Name                `xml:"urn:vim25 CurrentTime"`
-	This    *ManagedObjectReference `xml:"_this"`
+	XMLName xml.Name        `xml:"urn:vim25 CurrentTime"`
+	This    ServiceInstance `xml:"_this"`
 }
 
 type CurrentTimeResponse struct {
@@ -37,10 +44,10 @@ type CurrentTimeResponse struct {
 }
 
 type Login struct {
-	XMLName  xml.Name                `xml:"urn:vim25 Login"`
-	This     *ManagedObjectReference `xml:"_this"`
-	Username string                  `xml:"userName"`
-	Password string                  `xml:"password"`
+	XMLName  xml.Name       `xml:"urn:vim25 Login"`
+	This     SessionManager `xml:"_this"`
+	Username string         `xml:"userName"`
+	Password string         `xml:"password"`
 }
 
 type LoginResponse struct {
@@ -112,10 +119,10 @@ type RetrieveOptions struct {
 
 // http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.wssdk.apiref.doc/vmodl.query.PropertyCollector.html?path=7_0_0_2_6_17_8#retrievePropertiesEx
 type RetrievePropertiesEx struct {
-	XMLName xml.Name                `xml:"urn:vim25 RetrievePropertiesEx"`
-	This    *ManagedObjectReference `xml:"_this"`
-	SpecSet []*PropertyFilterSpec   `xml:"specSet"`
-	Options RetrieveOptions         `xml:"options"`
+	XMLName xml.Name              `xml:"urn:vim25 RetrievePropertiesEx"`
+	This    PropertyCollector     `xml:"_this"`
+	SpecSet []*PropertyFilterSpec `xml:"specSet"`
+	Options RetrieveOptions       `xml:"options"`
 }
 
 type RetrievePropertiesExResponse struct {
@@ -156,8 +163,8 @@ type AnyType struct {
 
 // http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.wssdk.apiref.doc/vim.VirtualMachine.html?path=7_0_0_2_6_14_8#powerOn
 type PowerOnVM_Task struct {
-	XMLName xml.Name                `xml:"urn:vim25 PowerOnVM_Task"`
-	This    *ManagedObjectReference `xml:"_this"`
+	XMLName xml.Name       `xml:"urn:vim25 PowerOnVM_Task"`
+	This    VirtualMachine `xml:"_this"`
 }
 
 type PowerOnVm_TaskResponse struct {

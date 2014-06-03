@@ -1,6 +1,6 @@
 package vim25
 
-func (s *VimService) Login(this *ManagedObjectReference, login, pass string) error {
+func (s *VimService) Login(this SessionManager, login, pass string) error {
 	loginResponse := new(LoginResponse)
 	opLogin := Login{
 		This:     this,

@@ -19,7 +19,7 @@ func vmPowerOn() {
 	}
 	service := vim25.VimService{URL: VSPHERE_URL}
 	response := new(vim25.RetrieveServiceContentResponse)
-	if err := service.Invoke(vim25.RetrieveServiceContent{This: vim25.ServiceInstance}, response); err != nil {
+	if err := service.Invoke(vim25.RetrieveServiceContent{This: vim25.ServiceInstanceRef}, response); err != nil {
 		fmt.Println(err)
 	}
 	sc := response.ServiceContent
@@ -28,7 +28,7 @@ func vmPowerOn() {
 		log.Fatal(err)
 	}
 
-	vmRef := &vim25.ManagedObjectReference{"VirtualMachine", vmName}
+	var vmRef vim25.VirtualMachine = &vim25.ManagedObjectReference{"VirtualMachine", vmName}
 	request := &vim25.PowerOnVM_Task{
 		This: vmRef,
 	}

@@ -14,7 +14,7 @@ func init() {
 func vmList() {
 	service := vim25.VimService{URL: VSPHERE_URL}
 	response := new(vim25.RetrieveServiceContentResponse)
-	if err := service.Invoke(vim25.RetrieveServiceContent{This: vim25.ServiceInstance}, response); err != nil {
+	if err := service.Invoke(vim25.RetrieveServiceContent{This: vim25.ServiceInstanceRef}, response); err != nil {
 		fmt.Println(err)
 	}
 	sc := response.ServiceContent

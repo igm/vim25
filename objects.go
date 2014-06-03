@@ -1,4 +1,4 @@
 package vim25
 
 // root managed object reference
-var ServiceInstance = &ManagedObjectReference{"ServiceInstance", "ServiceInstance"}
+var ServiceInstanceRef ServiceInstance = &ManagedObjectReference{"ServiceInstance", "ServiceInstance"}
