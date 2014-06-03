@@ -34,11 +34,10 @@ func Usage(usage func()) func() {
 func main() {
 	flag.Parse()
 	flag.Usage = Usage(flag.Usage)
-	// flag.Usage = func() {}
 	command := flag.Arg(0)
-	if cmd, exists := commands[command]; !exists {
-		flag.Usage()
-	} else {
+	if cmd, exists := commands[command]; exists {
 		cmd()
+		return
 	}
+	flag.Usage()
 }
