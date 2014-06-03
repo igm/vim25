@@ -8,28 +8,18 @@ import (
 )
 
 func init() {
-	commands["listvms"] = listVMs
+	commands["vmList"] = vmList
 }
 
-func listVMs() {
-	si := &vim25.ManagedObjectReference{"ServiceInstance", "ServiceInstance"}
+func vmList() {
 	service := vim25.VimService{URL: VSPHERE_URL}
-
 	response := new(vim25.RetrieveServiceContentResponse)
-	if err := service.Invoke(vim25.RetrieveServiceContent{This: si}, response); err != nil {
-		log.Fatal(err)
+	if err := service.Invoke(vim25.RetrieveServiceContent{This: vim25.ServiceInstance}, response); err != nil {
+		fmt.Println(err)
 	}
-
 	sc := response.ServiceContent
 
-	loginResponse := new(vim25.LoginResponse)
-	login := vim25.Login{
-		This:     sc.SessionManager,
-		Username: VSPHERE_LOGIN,
-		Password: VSPHERE_PASS,
-	}
-
-	if err := service.Invoke(login, loginResponse); err != nil {
+	if err := service.Login(sc.SessionManager, VSPHERE_LOGIN, VSPHERE_PASS); err != nil {
 		log.Fatal(err)
 	}
 
