@@ -37,11 +37,11 @@ type Body struct {
 }
 
 type VimService struct {
-	url         string
+	URL         string
 	soapSession *http.Cookie
 }
 
-func (s *VimService) invoke(request interface{}, response interface{}) error {
+func (s *VimService) Invoke(request interface{}, response interface{}) error {
 	requestXML, err := xml.Marshal(request)
 	if err != nil {
 		return err
@@ -57,7 +57,7 @@ func (s *VimService) invoke(request interface{}, response interface{}) error {
 		return err
 	}
 
-	req, err := http.NewRequest("POST", s.url, bytes.NewReader(d))
+	req, err := http.NewRequest("POST", s.URL, bytes.NewReader(d))
 	req.Header.Set("content-type", "text/xml; charset=\"utf-8\"")
 	req.Header.Set("user-agent", "VMware VI Client/5.0.0")
 	req.Header.Set("Soapaction", "\"urn:vim25/5.1\"")

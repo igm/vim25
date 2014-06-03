@@ -19,9 +19,9 @@ func XXTestSimple2(t *testing.T) {
 
 func TestCurrentTime(t *testing.T) {
 	si := &ManagedObjectReference{"ServiceInstance", "ServiceInstance"}
-	service := VimService{url: "https://127.0.0.1/sdk"}
+	service := VimService{URL: "https://127.0.0.1/sdk"}
 	response := new(CurrentTimeResponse)
-	err := service.invoke(CurrentTime{This: si}, response)
+	err := service.Invoke(CurrentTime{This: si}, response)
 	if err == nil {
 		t.Error(err)
 	}
@@ -29,10 +29,10 @@ func TestCurrentTime(t *testing.T) {
 
 func TestPowerOnVM(t *testing.T) {
 	si := &ManagedObjectReference{"ServiceInstance", "ServiceInstance"}
-	service := VimService{url: "https://127.0.0.1/sdk"}
+	service := VimService{URL: "https://127.0.0.1/sdk"}
 
 	response := new(RetrieveServiceContentResponse)
-	err := service.invoke(RetrieveServiceContent{This: si}, response)
+	err := service.Invoke(RetrieveServiceContent{This: si}, response)
 	if err != nil {
 		t.Error(err)
 	}
@@ -40,7 +40,7 @@ func TestPowerOnVM(t *testing.T) {
 	sc := response.ServiceContent
 
 	loginResponse := new(LoginResponse)
-	err = service.invoke(Login{
+	err = service.Invoke(Login{
 		This:     sc.SessionManager,
 		Username: VSPHERE_LOGIN,
 		Password: VSPHERE_PASS,
@@ -53,7 +53,7 @@ func TestPowerOnVM(t *testing.T) {
 		This: &ManagedObjectReference{"VirtualMachine", "vm-467"},
 	}
 	resp := new(PowerOnVm_TaskResponse)
-	err = service.invoke(request, resp)
+	err = service.Invoke(request, resp)
 	if err != nil {
 		t.Error(err)
 	} else {
@@ -63,10 +63,10 @@ func TestPowerOnVM(t *testing.T) {
 
 func TestListVMs(t *testing.T) {
 	si := &ManagedObjectReference{"ServiceInstance", "ServiceInstance"}
-	service := VimService{url: "https://127.0.0.1/sdk"}
+	service := VimService{URL: "https://127.0.0.1/sdk"}
 
 	response := new(RetrieveServiceContentResponse)
-	err := service.invoke(RetrieveServiceContent{This: si}, response)
+	err := service.Invoke(RetrieveServiceContent{This: si}, response)
 	if err != nil {
 		t.Error(err)
 	}
@@ -74,7 +74,7 @@ func TestListVMs(t *testing.T) {
 	sc := response.ServiceContent
 
 	loginResponse := new(LoginResponse)
-	err = service.invoke(Login{
+	err = service.Invoke(Login{
 		This:     sc.SessionManager,
 		Username: VSPHERE_LOGIN,
 		Password: VSPHERE_PASS,
@@ -91,7 +91,7 @@ func TestListVMs(t *testing.T) {
 	}
 
 	containerViewResponse := new(CreateContainerViewResponse)
-	err = service.invoke(ccv, containerViewResponse)
+	err = service.Invoke(ccv, containerViewResponse)
 	if err != nil {
 		t.Error(err)
 	}
@@ -126,7 +126,7 @@ func TestListVMs(t *testing.T) {
 	}
 
 	rep := new(RetrievePropertiesExResponse)
-	err = service.invoke(rpse, rep)
+	err = service.Invoke(rpse, rep)
 	if err != nil {
 		t.Error(err)
 	} else {

@@ -15,10 +15,10 @@ func init() {
 
 func TestSimple(t *testing.T) {
 	si := &ManagedObjectReference{"ServiceInstance", "ServiceInstance"}
-	service := VimService{url: "https://127.0.0.1/sdk"}
+	service := VimService{URL: "https://127.0.0.1/sdk"}
 
 	response := new(RetrieveServiceContentResponse)
-	err := service.invoke(RetrieveServiceContent{This: si}, response)
+	err := service.Invoke(RetrieveServiceContent{This: si}, response)
 	if err != nil {
 		fmt.Println(".....................", err)
 		t.Error(err)
