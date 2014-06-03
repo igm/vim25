@@ -8,16 +8,14 @@ import (
 	"os"
 )
 
-var VSPHERE_LOGIN string = os.Getenv("VSPHERE_LOGIN")
-var VSPHERE_PASS string = os.Getenv("VSPHERE_PASS")
-var VSPHERE_URL string = os.Getenv("VSPHERE_URL")
+var vLogin, vPass, vURL string
 
 var commands = map[string]func(){}
 
 func init() {
-	flag.StringVar(&VSPHERE_LOGIN, "u", os.Getenv("VSPHERE_LOGIN"), "vSphere username, default VSPHERE_LOGIN env variable")
-	flag.StringVar(&VSPHERE_PASS, "p", os.Getenv("VSPHERE_PASS"), "vSphere password, default VSPHERE_PASS env variable")
-	flag.StringVar(&VSPHERE_URL, "r", os.Getenv("VSPHERE_URL"), "vSphere URL, default VSPHERE_URL env variable")
+	flag.StringVar(&vLogin, "u", os.Getenv("VSPHERE_LOGIN"), "vSphere username, default VSPHERE_LOGIN env variable")
+	flag.StringVar(&vPass, "p", os.Getenv("VSPHERE_PASS"), "vSphere password, default VSPHERE_PASS env variable")
+	flag.StringVar(&vURL, "r", os.Getenv("VSPHERE_URL"), "vSphere URL, default VSPHERE_URL env variable")
 
 	http.DefaultClient.Transport = &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},

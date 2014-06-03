@@ -12,12 +12,12 @@ func init() {
 }
 
 func currentTime() {
-	service := vim25.VimService{URL: VSPHERE_URL}
+	service := vim25.VimService{URL: vURL}
 	response := new(vim25.RetrieveServiceContentResponse)
 	if err := service.Invoke(vim25.RetrieveServiceContent{This: vim25.ServiceInstanceRef}, response); err != nil {
 		fmt.Println(err)
 	}
-	if err := service.Login(response.ServiceContent.SessionManager, VSPHERE_LOGIN, VSPHERE_PASS); err != nil {
+	if err := service.Login(response.ServiceContent.SessionManager, vLogin, vPass); err != nil {
 		log.Fatal(err)
 	}
 	resTime := new(vim25.CurrentTimeResponse)

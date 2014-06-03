@@ -12,14 +12,14 @@ func init() {
 }
 
 func vmList() {
-	service := vim25.VimService{URL: VSPHERE_URL}
+	service := vim25.VimService{URL: vURL}
 	response := new(vim25.RetrieveServiceContentResponse)
 	if err := service.Invoke(vim25.RetrieveServiceContent{This: vim25.ServiceInstanceRef}, response); err != nil {
 		fmt.Println(err)
 	}
 	sc := response.ServiceContent
 
-	if err := service.Login(sc.SessionManager, VSPHERE_LOGIN, VSPHERE_PASS); err != nil {
+	if err := service.Login(sc.SessionManager, vLogin, vPass); err != nil {
 		log.Fatal(err)
 	}
 
