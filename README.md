@@ -1,3 +1,5 @@
+[![GoDoc](http://godoc.org/github.com/igm/vim25?status.png)](http://godoc.org/github.com/igm/vim25)
+
 vim25
 =====
 
