@@ -7,17 +7,17 @@ import (
 	"net/http"
 )
 
-type Envelope struct {
+type envelope struct {
 	XMLName   xml.Name `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
 	XmlSchema string   `xml:"xmlns:xsi,attr"`
-	Header    Header
-	Body      Body
+	Header    header
+	Body      body
 }
 
-type Header struct {
+type header struct {
 }
 
-type Fault struct {
+type fault struct {
 	XMLName xml.Name `xml:"http://schemas.xmlsoap.org/soap/envelope/ Fault"`
 	Code    string   `xml:"faultcode"`
 	String  string   `xml:"faultstring"`
@@ -28,12 +28,12 @@ type Detail struct {
 	Message string `xml:",innerxml"`
 }
 
-func (f *Fault) Error() string { return fmt.Sprintf("[%s] %s;%s", f.Code, f.String, f.Detail) }
+func (f *fault) Error() string { return fmt.Sprintf("[%s] %s;%s", f.Code, f.String, f.Detail) }
 
-type Body struct {
+type body struct {
 	XMLName xml.Name `xml:"http://schemas.xmlsoap.org/soap/envelope/ Body"`
 	Content string   `xml:",innerxml"`
-	Fault   *Fault
+	Fault   *fault
 }
 
 type VimService struct {
@@ -46,9 +46,9 @@ func (s *VimService) Invoke(request interface{}, response interface{}) error {
 	if err != nil {
 		return err
 	}
-	e := &Envelope{
+	e := &envelope{
 		XmlSchema: "http://www.w3.org/2001/XMLSchema-instance",
-		Body: Body{
+		Body: body{
 			Content: string(requestXML),
 		},
 	}
@@ -81,7 +81,7 @@ func (s *VimService) Invoke(request interface{}, response interface{}) error {
 	}
 	// fmt.Println(resp)
 	dec := xml.NewDecoder(resp.Body)
-	e = new(Envelope)
+	e = new(envelope)
 	dec.Decode(e)
 	// fmt.Println(e.Body.Content)
 	xml.Unmarshal([]byte(e.Body.Content), response)
