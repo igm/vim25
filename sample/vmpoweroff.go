@@ -15,7 +15,7 @@ func init() {
 func vmPowerOff() {
 	vmName := flag.Arg(1)
 	if vmName == "" {
-		log.Fatal("Missing Virtual Machine Obj reference value as param, i.e. vm-123")
+		log.Fatal("Missing VirtualMachine instance as param, i.e. vm-123")
 	}
 	service := vim25.VimService{URL: vURL}
 	response := new(vim25.RetrieveServiceContentResponse)
@@ -28,7 +28,7 @@ func vmPowerOff() {
 		log.Fatal(err)
 	}
 
-	var vmRef vim25.VirtualMachine = &vim25.ManagedObjectReference{"VirtualMachine", vmName}
+	vmRef := vim25.VirtualMachine{"VirtualMachine", vmName}
 	request := &vim25.PowerOffVM_Task{
 		This: vmRef,
 	}

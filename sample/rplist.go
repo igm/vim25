@@ -6,11 +6,11 @@ import (
 )
 
 func init() {
-	commands["vmList"] = vmList
+	commands["rpList"] = rpList
 }
 
-func vmList() {
-	res, err := moList("VirtualMachine", "name", "guest.ipAddress")
+func rpList() {
+	res, err := moList("ResourcePool")
 	if err != nil {
 		log.Fatal(err)
 	}
