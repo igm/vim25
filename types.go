@@ -5,40 +5,37 @@ import (
 	"time"
 )
 
-type ManagedObjectReference struct {
-	Type  string `xml:"type,attr"`
-	Value string `xml:",chardata"`
-}
-
-type (
-	VirtualMachine    *ManagedObjectReference
-	SessionManager    *ManagedObjectReference
-	PropertyCollector *ManagedObjectReference
-	ServiceInstance   *ManagedObjectReference
-	Folder            *ManagedObjectReference
-	Task              *ManagedObjectReference
-)
-
 type RetrieveServiceContent struct {
-	XMLName xml.Name        `xml:"urn:vim25 RetrieveServiceContent"`
-	This    ServiceInstance `xml:"_this"`
+	XMLName xml.Name         `xml:"urn:vim25 RetrieveServiceContent"`
+	This    *ServiceInstance `xml:"urn:vim25 _this"`
 }
 
 type RetrieveServiceContentResponse struct {
-	ServiceContent ServiceContent `xml:"urn:vim25 returnval"`
+	XMLName   xml.Name        `xml:"urn:vim25 RetrieveServiceContentResponse"`
+	Returnval *ServiceContent `xml:"urn:vim25 returnval"`
 }
 
 type ServiceContent struct {
-	RootFolder        Folder                  `xml:"rootFolder"`
-	AccountManager    *ManagedObjectReference `xml:"accountManager"`
-	ViewManager       *ManagedObjectReference `xml:"viewManager"`
-	PropertyCollector PropertyCollector       `xml:"propertyCollector"`
-	SessionManager    SessionManager          `xml:"sessionManager"`
+	RootFolder        *Folder                 `xml:"urn:vim25 rootFolder"`
+	PropertyCollector *PropertyCollector      `xml:"urn:vim25 propertyCollector"`
+	ViewManager       *ManagedObjectReference `xml:"urn:vim25 viewManager"`
+	About             About                   `xml:"urn:vim25 about"`
+	Setting           *OptionManager          `xml:"urn:vim25 setting"`
+	SessionManager    *SessionManager         `xml:"urn:vim25 sessionManager"`
+}
+
+type About struct {
+	Name       string `xml:"name"`
+	FullName   string `xml:"fullName"`
+	Vendor     string `xml:"vendor"`
+	Version    string `xml:"version"`
+	Build      uint64 `xml:"build"`
+	ApiVersion string `xml:"apiVersion"`
 }
 
 type CurrentTime struct {
 	XMLName xml.Name        `xml:"urn:vim25 CurrentTime"`
-	This    ServiceInstance `xml:"_this"`
+	This    ServiceInstance `xml:"urn:vim25 _this"`
 }
 
 type CurrentTimeResponse struct {
@@ -46,10 +43,10 @@ type CurrentTimeResponse struct {
 }
 
 type Login struct {
-	XMLName  xml.Name       `xml:"urn:vim25 Login"`
-	This     SessionManager `xml:"_this"`
-	Username string         `xml:"userName"`
-	Password string         `xml:"password"`
+	XMLName  xml.Name        `xml:"urn:vim25 Login"`
+	This     *SessionManager `xml:"_this"`
+	Username string          `xml:"userName"`
+	Password string          `xml:"password"`
 }
 
 type LoginResponse struct {
@@ -66,6 +63,7 @@ type UserSession struct {
 	Locate         string    `xml:"locale"`
 }
 
+// http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.wssdk.apiref.doc/vim.view.ViewManager.html#createContainerView
 type CreateContainerView struct {
 	XMLName   xml.Name                `xml:"urn:vim25 CreateContainerView"`
 	This      *ManagedObjectReference `xml:"_this"`
@@ -75,8 +73,8 @@ type CreateContainerView struct {
 }
 
 type CreateContainerViewResponse struct {
-	XMLName       xml.Name                `xml:"urn:vim25 CreateContainerViewResponse"`
-	ContainerView *ManagedObjectReference `xml:"urn:vim25 returnval"`
+	XMLName       xml.Name       `xml:"urn:vim25 CreateContainerViewResponse"`
+	ContainerView *ContainerView `xml:"urn:vim25 returnval"`
 }
 
 // http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.wssdk.apiref.doc/vmodl.query.PropertyCollector.ObjectSpec.html
@@ -94,10 +92,10 @@ type SelectionSpec struct {
 // http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.wssdk.apiref.doc/vmodl.query.PropertyCollector.TraversalSpec.html
 type TraversalSpec struct {
 	SelectionSpec
-	TypeAttr string `xml:"xsi:type,attr"`
-	Type     string `xml:"type"`
-	Path     string `xml:"path"`
-	Skip     bool   `xml:"skip"`
+	XsiType string `xml:"http://www.w3.org/2001/XMLSchema-instance type,attr"`
+	Type    string `xml:"type"`
+	Path    string `xml:"path"`
+	Skip    bool   `xml:"skip"`
 }
 
 // http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.wssdk.apiref.doc/vmodl.query.PropertyCollector.PropertySpec.html
@@ -109,9 +107,9 @@ type PropertySpec struct {
 
 // http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.wssdk.apiref.doc/vmodl.query.PropertyCollector.FilterSpec.html
 type PropertyFilterSpec struct {
-	PropSet   []*PropertySpec `xml:"propSet"`
-	ObjectSet []*ObjectSpec   `xml:"objectSet"`
-	// ReportMissingObjectsInResults bool            `xml:"reportMissingObjectsInResults"`
+	PropSet                       []*PropertySpec `xml:"propSet"`
+	ObjectSet                     []*ObjectSpec   `xml:"objectSet"`
+	ReportMissingObjectsInResults bool            `xml:"reportMissingObjectsInResults"`
 }
 
 // http://pubs.vmware.com/vsphere-55/index.jsp?topic=%2Fcom.vmware.wssdk.apiref.doc%2Fvmodl.query.PropertyCollector.RetrieveOptions.html
@@ -122,7 +120,7 @@ type RetrieveOptions struct {
 // http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.wssdk.apiref.doc/vmodl.query.PropertyCollector.html?path=7_0_0_2_6_17_8#retrievePropertiesEx
 type RetrievePropertiesEx struct {
 	XMLName xml.Name              `xml:"urn:vim25 RetrievePropertiesEx"`
-	This    PropertyCollector     `xml:"_this"`
+	This    *PropertyCollector    `xml:"_this"`
 	SpecSet []*PropertyFilterSpec `xml:"specSet"`
 	Options RetrieveOptions       `xml:"options"`
 }
@@ -159,26 +157,6 @@ type DynamicProperty struct {
 
 // xsd:anyType
 type AnyType struct {
-	Type  string `xml:"type,attr"`
-	Value string `xml:",innerxml"`
-}
-
-// http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.wssdk.apiref.doc/vim.VirtualMachine.html?path=7_0_0_2_6_14_8#powerOn
-type PowerOnVM_Task struct {
-	XMLName xml.Name       `xml:"urn:vim25 PowerOnVM_Task"`
-	This    VirtualMachine `xml:"_this"`
-}
-
-type PowerOnVm_TaskResponse struct {
-	Task Task `xml:"returnval"`
-}
-
-// http://pubs.vmware.com/vsphere-55/index.jsp?topic=%2Fcom.vmware.wssdk.apiref.doc%2Fvim.VirtualMachine.html
-type PowerOffVM_Task struct {
-	XMLName xml.Name       `xml:"urn:vim25 PowerOffVM_Task"`
-	This    VirtualMachine `xml:"_this"`
-}
-
-type PowerOffVm_TaskResponse struct {
-	Task Task `xml:"returnval"`
+	XsiType string `xml:"http://www.w3.org/2001/XMLSchema-instance type,attr"`
+	Value   string `xml:",innerxml"`
 }
