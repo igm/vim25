@@ -1,10 +1,6 @@
 package main
 
-import (
-	"fmt"
-
-	"github.com/codegangsta/cli"
-)
+import "github.com/codegangsta/cli"
 
 // Register VM specific commands
 func init() {
@@ -21,13 +17,10 @@ func init() {
 				Name:   "on",
 				Action: vmOn,
 				Usage:  "Power on Virtual Machine given by its managed object reference",
-				Before: func(c *cli.Context) error {
-					fmt.Println(c.Args())
-					if c.Args().Get(1) == "" {
-						// return errors.New("missing VM obj reference")
-					}
-					return nil
-				},
+				// Before: func(c *cli.Context) error {
+				// 	// fmt.Println(c.Args())
+				// 	return nil
+				// },
 			},
 		},
 	})

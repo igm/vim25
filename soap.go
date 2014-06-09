@@ -36,18 +36,27 @@ type Body struct {
 	XMLName xml.Name `xml:"http://schemas.xmlsoap.org/soap/envelope/ Body"`
 	Fault   *Fault
 
+	// ServiceInstance
 	RetrieveServiceContentRequest  *RetrieveServiceContent
 	RetrieveServiceContentResponse *RetrieveServiceContentResponse
+	CurrentTimeRequest             *CurrentTime
+	CurrentTimeResponse            *CurrentTimeResponse
 
-	CurrentTimeRequest  *CurrentTime
-	CurrentTimeResponse *CurrentTimeResponse
-
+	// SessionManager
 	LoginRequest  *Login
 	LoginResponse *LoginResponse
 
+	// ViewManager
 	CreateContainerViewRequest  *CreateContainerView
 	CreateContainerViewResponse *CreateContainerViewResponse
 
+	// PropertyCollector
 	RetrievePropertiesExRequest  *RetrievePropertiesEx
 	RetrievePropertiesExResponse *RetrievePropertiesExResponse
+
+	// VirtualMachine
+	PowerOnVM_Task          *PowerOnVM_Task
+	PowerOnVM_TaskResponse  *PowerOnVM_TaskResponse
+	PowerOffVM_Task         *PowerOffVM_Task
+	PowerOffVM_TaskResponse *PowerOffVM_TaskResponse
 }

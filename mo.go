@@ -15,5 +15,6 @@ type (
 	Folder            ManagedObjectReference
 	Task              ManagedObjectReference
 	OptionManager     ManagedObjectReference
+	ViewManager       ManagedObjectReference
 	ContainerView     ManagedObjectReference
 )
