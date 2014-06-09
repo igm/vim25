@@ -11,12 +11,13 @@ type RetrievePropertiesEx struct {
 }
 
 type RetrievePropertiesExResponse struct {
-	XMLName        xml.Name        `xml:"urn:vim25 RetrievePropertiesExResponse"`
-	RetrieveResult *RetrieveResult `xml:"returnval"`
+	XMLName        xml.Name       `xml:"urn:vim25 RetrievePropertiesExResponse"`
+	RetrieveResult RetrieveResult `xml:"returnval"`
 }
 
 // http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.wssdk.apiref.doc/vmodl.query.PropertyCollector.ObjectSpec.html
 type ObjectSpec struct {
+	XsiType   string                  `xml:"http://www.w3.org/2001/XMLSchema-instance type,attr,ommitempty"`
 	Obj       *ManagedObjectReference `xml:"obj"`
 	Skip      bool                    `xml:"skip"`
 	SelectSet []interface{}           `xml:"selectSet"`

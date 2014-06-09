@@ -16,6 +16,7 @@ func vmImport(c *cli.Context) {
 	datastoreName := c.String("datastore")
 	folderName := c.String("folder")
 	ovfFileName := c.Args().Get(0)
+	vmName := c.Args().Get(1)
 	ovfFile, err := os.Open(ovfFileName)
 	if err != nil {
 		log.Fatal(err)
@@ -45,7 +46,7 @@ func vmImport(c *cli.Context) {
 		Datastore:    &ds,
 		ResourcePool: &rp,
 		Cisp: vim25.OvfCreateImportSpecParams{
-			EntityName: "sampleVM",
+			EntityName: vmName,
 			OvfManagerCommonParams: vim25.OvfManagerCommonParams{
 				Locale: "US",
 			},
@@ -58,6 +59,8 @@ func vmImport(c *cli.Context) {
 	fmt.Println(body.CreateImportSpecResponse)
 	fmt.Println(folder)
 
+	// since we keep "innerxml", it uses "xsi" namespace prefix, so we need to replace it with what we use (or xml marshaller uses)
+	// otherwise we would need to unmashall entire content and marshall it back
 	replaced := strings.Replace(body.CreateImportSpecResponse.ImportSpec.Content, "xsi", "XMLSchema-instance", -1)
 	body.CreateImportSpecResponse.ImportSpec.Content = replaced
 
@@ -71,4 +74,38 @@ func vmImport(c *cli.Context) {
 		log.Fatal(err, body.Fault)
 	}
 	fmt.Println(body.ImportVAppResponse.HttpNfcLease)
+
+	httpNfsLease := body.ImportVAppResponse.HttpNfcLease
+
+	for {
+		// check HttpNfcLease status
+		pfs := &vim25.PropertyFilterSpec{
+			PropSet: []*vim25.PropertySpec{
+				{
+					Type:    httpNfsLease.Type,
+					All:     false,
+					PathSet: []string{"state"},
+				},
+			},
+			ObjectSet: []*vim25.ObjectSpec{
+				{
+					XsiType: "ObjectSpec",
+					Obj:     (*vim25.ManagedObjectReference)(httpNfsLease),
+					Skip:    false,
+				},
+			},
+		}
+
+		rpe := &vim25.RetrievePropertiesEx{
+			This:    sc.PropertyCollector,
+			SpecSet: []*vim25.PropertyFilterSpec{pfs},
+		}
+
+		body, err = service.SoapRequest(&vim25.Body{RetrievePropertiesExRequest: rpe})
+
+		if err != nil || body.Fault != nil {
+			log.Fatal(err, body.Fault)
+		}
+		fmt.Println(body.RetrievePropertiesExResponse)
+	}
 }

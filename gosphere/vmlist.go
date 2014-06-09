@@ -38,8 +38,9 @@ func vmList(c *cli.Context) {
 	cv := body.CreateContainerViewResponse.ContainerView
 
 	oSpec := &vim25.ObjectSpec{
-		Obj:  (*vim25.ManagedObjectReference)(cv),
-		Skip: true,
+		XsiType: "ObjectSpec",
+		Obj:     (*vim25.ManagedObjectReference)(cv),
+		Skip:    true,
 	}
 
 	tSpec := &vim25.TraversalSpec{
@@ -68,8 +69,8 @@ func vmList(c *cli.Context) {
 	}
 
 	body, err = service.SoapRequest(&vim25.Body{RetrievePropertiesExRequest: rpse})
-	if err != nil {
-		log.Fatal(err)
+	if err != nil || body.Fault != nil {
+		log.Fatal(err, body.Fault)
 	}
 
 	rep := body.RetrievePropertiesExResponse
