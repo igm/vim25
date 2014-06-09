@@ -12,9 +12,10 @@ import (
 
 var (
 	login, pass, url string
+	service          *vim25.Service
 
 	app = cli.NewApp()
-	si  = vim25.ServiceInstance{"ServiceInstance", "ServiceInstance"}
+	si  = &vim25.ServiceInstance{"ServiceInstance", "ServiceInstance"}
 )
 
 var flags = []cli.Flag{
@@ -36,6 +37,7 @@ func init() {
 
 func before(c *cli.Context) error {
 	login, pass, url = c.GlobalString("login"), c.GlobalString("password"), c.GlobalString("host")
+	service = &vim25.Service{Url: url}
 	return nil
 }
 

@@ -6,8 +6,8 @@ import (
 )
 
 type CurrentTime struct {
-	XMLName xml.Name        `xml:"urn:vim25 CurrentTime"`
-	This    ServiceInstance `xml:"urn:vim25 _this"`
+	XMLName xml.Name         `xml:"urn:vim25 CurrentTime"`
+	This    *ServiceInstance `xml:"urn:vim25 _this"`
 }
 
 type CurrentTimeResponse struct {
@@ -31,6 +31,7 @@ type ServiceContent struct {
 	About             About              `xml:"urn:vim25 about"`
 	Setting           *OptionManager     `xml:"urn:vim25 setting"`
 	SessionManager    *SessionManager    `xml:"urn:vim25 sessionManager"`
+	OvfManager        *OvfManager        `xml:"ovfManager"`
 }
 
 type About struct {

@@ -17,7 +17,6 @@ func init() {
 }
 
 func currentTime(c *cli.Context) {
-	service := &vim25.Service{Url: url}
 	sc, err := ServiceContent(service)
 	if err != nil {
 		log.Fatal(err)

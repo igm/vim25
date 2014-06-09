@@ -59,4 +59,10 @@ type Body struct {
 	PowerOnVM_TaskResponse  *PowerOnVM_TaskResponse
 	PowerOffVM_Task         *PowerOffVM_Task
 	PowerOffVM_TaskResponse *PowerOffVM_TaskResponse
+
+	// OvfManager
+	CreateImportSpecRequest  *CreateImportSpec
+	CreateImportSpecResponse *CreateImportSpecResponse
+	ImportVAppRequest        *ImportVApp
+	ImportVAppResponse       *ImportVAppResponse
 }

@@ -38,7 +38,9 @@ func (s *Service) writeHttpHeader(req *http.Request) {
 }
 
 func (s *Service) SoapRequest(body *Body) (*Body, error) {
-	xmlEnvelope, err := xml.Marshal(Envelope{Body: body})
+	xmlEnvelope, err := xml.Marshal(Envelope{
+		Body: body,
+	})
 	if err != nil {
 		return nil, err
 	}

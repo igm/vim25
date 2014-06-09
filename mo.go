@@ -17,4 +17,9 @@ type (
 	OptionManager     ManagedObjectReference
 	ViewManager       ManagedObjectReference
 	ContainerView     ManagedObjectReference
+	ResourcePool      ManagedObjectReference
+	OvfManager        ManagedObjectReference
+	Datastore         ManagedObjectReference
+	SearchIndex       ManagedObjectReference
+	HttpNfcLease      ManagedObjectReference
 )

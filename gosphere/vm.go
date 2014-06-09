@@ -17,10 +17,16 @@ func init() {
 				Name:   "on",
 				Action: vmOn,
 				Usage:  "Power on Virtual Machine given by its managed object reference",
-				// Before: func(c *cli.Context) error {
-				// 	// fmt.Println(c.Args())
-				// 	return nil
-				// },
+			}, {
+				Name:        "import",
+				Action:      vmImport,
+				Usage:       "Import Virtual Machine using OVF",
+				Description: "Import Virtual Machine using OVF file",
+				Flags: []cli.Flag{
+					cli.StringFlag{"resourcepool, r", "", "resource pool obj reference"},
+					cli.StringFlag{"datastore, d", "", "datastore obj reference"},
+					cli.StringFlag{"folder, f", "", "folder obj reference"},
+				},
 			},
 		},
 	})

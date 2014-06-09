@@ -8,16 +8,24 @@ import (
 	"github.com/igm/vim25"
 )
 
-func ServiceContent(service *vim25.Service) (*vim25.ServiceContent, error) {
-	rsc := vim25.RetrieveServiceContent{This: si}
-	body, err := service.SoapRequest(&vim25.Body{RetrieveServiceContentRequest: &rsc})
-	if err != nil {
-		return nil, err
-	}
-	return body.RetrieveServiceContentResponse.Returnval, nil
+func init() {
+	app.Commands = append(app.Commands, cli.Command{
+		Name:  "mo",
+		Usage: "Managed Object commands",
+		Subcommands: []cli.Command{
+			{
+				Name:      "list",
+				ShortName: "ls",
+				Usage:     "List MOs",
+				Action:    moList,
+			},
+		},
+	})
 }
 
-func vmList(c *cli.Context) {
+func moList(c *cli.Context) {
+	moType := c.Args().First()
+
 	sc, err := ServiceContent(service)
 	if err != nil {
 		log.Fatal(err)
@@ -27,13 +35,13 @@ func vmList(c *cli.Context) {
 	ccv := &vim25.CreateContainerView{
 		This:      sc.ViewManager,
 		Container: (*vim25.ManagedObjectReference)(sc.RootFolder),
-		Type:      []string{"VirtualMachine"},
+		Type:      []string{moType},
 		Recursive: true,
 	}
 
 	body, err := service.SoapRequest(&vim25.Body{CreateContainerViewRequest: ccv})
-	if err != nil {
-		log.Fatal(err)
+	if err != nil || body.Fault != nil {
+		log.Fatal(err, body.Fault)
 	}
 	cv := body.CreateContainerViewResponse.ContainerView
 
@@ -52,7 +60,7 @@ func vmList(c *cli.Context) {
 	oSpec.SelectSet = append(oSpec.SelectSet, tSpec)
 
 	pSpec := &vim25.PropertySpec{
-		Type:    "VirtualMachine",
+		Type:    moType,
 		PathSet: []string{"name"},
 	}
 
