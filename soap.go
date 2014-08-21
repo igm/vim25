@@ -36,6 +36,10 @@ type Body struct {
 	XMLName xml.Name `xml:"http://schemas.xmlsoap.org/soap/envelope/ Body"`
 	Fault   *Fault
 
+	// SearchIndex
+	FindByUuidRequest  *FindByUuid
+	FindByUuidResponse *FindByUuidResponse
+
 	// ServiceInstance
 	RetrieveServiceContentRequest  *RetrieveServiceContent
 	RetrieveServiceContentResponse *RetrieveServiceContentResponse
