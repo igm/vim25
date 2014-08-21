@@ -15,6 +15,7 @@ var Debug = false
 type Service struct {
 	Url         string
 	soapSession *http.Cookie
+	HttpClient  *http.Client
 }
 
 func (s *Service) readSessionCookie(resp *http.Response) {
@@ -57,7 +58,11 @@ func (s *Service) SoapRequest(body *Body) (*Body, error) {
 	}
 	s.writeHttpHeader(req)
 	s.writeSessionCookie(req)
-	resp, err := http.DefaultClient.Do(req)
+	client := http.DefaultClient
+	if nil != s.HttpClient {
+		client = s.HttpClient
+	}
+	resp, err := client.Do(req)
 	if Debug {
 		dump, _ := httputil.DumpResponse(resp, true)
 		fmt.Println(string(dump))
