@@ -36,6 +36,10 @@ type Body struct {
 	XMLName xml.Name `xml:"http://schemas.xmlsoap.org/soap/envelope/ Body"`
 	Fault   *Fault
 
+	// SearchIndex
+	FindByUuidRequest  *FindByUuid
+	FindByUuidResponse *FindByUuidResponse
+
 	// ServiceInstance
 	RetrieveServiceContentRequest  *RetrieveServiceContent
 	RetrieveServiceContentResponse *RetrieveServiceContentResponse
@@ -51,8 +55,11 @@ type Body struct {
 	CreateContainerViewResponse *CreateContainerViewResponse
 
 	// PropertyCollector
-	RetrievePropertiesExRequest  *RetrievePropertiesEx
-	RetrievePropertiesExResponse *RetrievePropertiesExResponse
+	RetrievePropertiesExRequest          *RetrievePropertiesEx
+	RetrievePropertiesExResponse         *RetrievePropertiesExResponse
+	ContinueRetrievePropertiesExRequest  *ContinueRetrievePropertiesEx
+	ContinueRetrievePropertiesExResponse *ContinueRetrievePropertiesExResponse
+	CancelRetrievePropertiesExRequest    *CancelRetrievePropertiesEx
 
 	// VirtualMachine
 	PowerOnVM_Task          *PowerOnVM_Task
