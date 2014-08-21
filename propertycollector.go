@@ -15,6 +15,25 @@ type RetrievePropertiesExResponse struct {
 	RetrieveResult RetrieveResult `xml:"returnval"`
 }
 
+// http://pubs.vmware.com/vsphere-55/topic/com.vmware.wssdk.apiref.doc/vmodl.query.PropertyCollector.html#continueRetrievePropertiesEx
+type ContinueRetrievePropertiesEx struct {
+	XMLName xml.Name           `xml:"urn:vim25 ContinueRetrievePropertiesEx"`
+	This    *PropertyCollector `xml:"_this"`
+	Token   string             `xml:"token"`
+}
+
+type ContinueRetrievePropertiesExResponse struct {
+	XMLName        xml.Name       `xml:"urn:vim25 ContinueRetrievePropertiesExResponse"`
+	RetrieveResult RetrieveResult `xml:"returnval"`
+}
+
+// http://pubs.vmware.com/vsphere-55/topic/com.vmware.wssdk.apiref.doc/vmodl.query.PropertyCollector.html#cancelRetrievePropertiesEx
+type CancelRetrievePropertiesEx struct {
+	XMLName xml.Name           `xml:"urn:vim25 CancelRetrievePropertiesEx"`
+	This    *PropertyCollector `xml:"_this"`
+	Token   string             `xml:"token"`
+}
+
 // http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.wssdk.apiref.doc/vmodl.query.PropertyCollector.ObjectSpec.html
 type ObjectSpec struct {
 	XsiType   string                  `xml:"http://www.w3.org/2001/XMLSchema-instance type,attr,ommitempty"`

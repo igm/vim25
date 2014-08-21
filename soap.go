@@ -55,8 +55,11 @@ type Body struct {
 	CreateContainerViewResponse *CreateContainerViewResponse
 
 	// PropertyCollector
-	RetrievePropertiesExRequest  *RetrievePropertiesEx
-	RetrievePropertiesExResponse *RetrievePropertiesExResponse
+	RetrievePropertiesExRequest          *RetrievePropertiesEx
+	RetrievePropertiesExResponse         *RetrievePropertiesExResponse
+	ContinueRetrievePropertiesExRequest  *ContinueRetrievePropertiesEx
+	ContinueRetrievePropertiesExResponse *ContinueRetrievePropertiesExResponse
+	CancelRetrievePropertiesExRequest    *CancelRetrievePropertiesEx
 
 	// VirtualMachine
 	PowerOnVM_Task          *PowerOnVM_Task
