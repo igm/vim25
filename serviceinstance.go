@@ -31,6 +31,7 @@ type ServiceContent struct {
 	About             About              `xml:"urn:vim25 about"`
 	Setting           *OptionManager     `xml:"urn:vim25 setting"`
 	SessionManager    *SessionManager    `xml:"urn:vim25 sessionManager"`
+	SearchIndex       *SearchIndex       `xml:"urn:vim25 searchIndex"`
 	OvfManager        *OvfManager        `xml:"ovfManager"`
 }
 
