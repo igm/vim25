@@ -50,10 +50,11 @@ type SelectionSpec struct {
 // http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.wssdk.apiref.doc/vmodl.query.PropertyCollector.TraversalSpec.html
 type TraversalSpec struct {
 	SelectionSpec
-	XsiType string `xml:"http://www.w3.org/2001/XMLSchema-instance type,attr"`
-	Type    string `xml:"type"`
-	Path    string `xml:"path"`
-	Skip    bool   `xml:"skip"`
+	XsiType   string           `xml:"http://www.w3.org/2001/XMLSchema-instance type,attr"`
+	Type      string           `xml:"type"`
+	Path      string           `xml:"path"`
+	Skip      bool             `xml:"skip"`
+	SelectSet []*SelectionSpec `xml:"selectSet"`
 }
 
 // http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.wssdk.apiref.doc/vmodl.query.PropertyCollector.PropertySpec.html
