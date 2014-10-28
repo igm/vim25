@@ -104,3 +104,13 @@ type CreatePropertyCollectorResponse struct {
 	XMLName           xml.Name           `xml:"urn:vim25 CreatePropertyCollectorResponse"`
 	PropertyCollector *PropertyCollector `xml:"returnval"`
 }
+
+// http://pubs.vmware.com/vsphere-55/index.jsp?topic=%2Fcom.vmware.wssdk.apiref.doc%2Fvmodl.query.PropertyCollector.html
+type DestroyPropertyCollector struct {
+	XMLName xml.Name           `xml:"urn:vim25 DestroyPropertyCollector"`
+	This    *PropertyCollector `xml:"_this"`
+}
+
+type DestroyPropertyCollectorResponse struct {
+	XMLName xml.Name `xml:"urn:vim25 DestroyPropertyCollectorResponse"`
+}
