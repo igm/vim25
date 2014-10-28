@@ -60,6 +60,8 @@ type Body struct {
 	ContinueRetrievePropertiesExRequest  *ContinueRetrievePropertiesEx
 	ContinueRetrievePropertiesExResponse *ContinueRetrievePropertiesExResponse
 	CancelRetrievePropertiesExRequest    *CancelRetrievePropertiesEx
+	CreatePropertyCollectorRequest       *CreatePropertyCollector
+	CreatePropertyCollectorResponse      *CreatePropertyCollectorResponse
 
 	// VirtualMachine
 	PowerOnVM_Task          *PowerOnVM_Task

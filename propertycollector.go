@@ -93,3 +93,14 @@ type MissingProperty struct {
 	// Fault LocalizedMethodFault `xml:"fault"` // TODO(igm)
 	Path string `xml:"path"`
 }
+
+// http://pubs.vmware.com/vsphere-55/index.jsp?topic=%2Fcom.vmware.wssdk.apiref.doc%2Fvmodl.query.PropertyCollector.html
+type CreatePropertyCollector struct {
+	XMLName xml.Name           `xml:"urn:vim25 CreatePropertyCollector"`
+	This    *PropertyCollector `xml:"_this"`
+}
+
+type CreatePropertyCollectorResponse struct {
+	XMLName           xml.Name           `xml:"urn:vim25 CreatePropertyCollectorResponse"`
+	PropertyCollector *PropertyCollector `xml:"returnval"`
+}
