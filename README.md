@@ -1,5 +1,7 @@
 [![GoDoc](http://godoc.org/github.com/igm/vim25?status.png)](http://godoc.org/github.com/igm/vim25)
 
+Deprecated in favour of https://github.com/vmware/govmomi
+
 vim25
 =====
 
