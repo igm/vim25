@@ -16,6 +16,14 @@ type LoginResponse struct {
 	UserSession UserSession `xml:"urn:vim25 returnval"`
 }
 
+type Logout struct {
+	XMLName xml.Name        `xml:"urn:vim25 Logout"`
+	This    *SessionManager `xml:"_this"`
+}
+
+type LogoutResponse struct {
+}
+
 type UserSession struct {
 	Key            string    `xml:"key"`
 	UserName       string    `xml:"userName"`

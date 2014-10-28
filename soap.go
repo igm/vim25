@@ -47,8 +47,10 @@ type Body struct {
 	CurrentTimeResponse            *CurrentTimeResponse
 
 	// SessionManager
-	LoginRequest  *Login
-	LoginResponse *LoginResponse
+	LoginRequest   *Login
+	LoginResponse  *LoginResponse
+	LogoutRequest  *Logout
+	LogoutResponse *LogoutResponse
 
 	// ViewManager
 	CreateContainerViewRequest  *CreateContainerView
