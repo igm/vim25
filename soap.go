@@ -47,8 +47,10 @@ type Body struct {
 	CurrentTimeResponse            *CurrentTimeResponse
 
 	// SessionManager
-	LoginRequest  *Login
-	LoginResponse *LoginResponse
+	LoginRequest   *Login
+	LoginResponse  *LoginResponse
+	LogoutRequest  *Logout
+	LogoutResponse *LogoutResponse
 
 	// ViewManager
 	CreateContainerViewRequest  *CreateContainerView
@@ -60,6 +62,10 @@ type Body struct {
 	ContinueRetrievePropertiesExRequest  *ContinueRetrievePropertiesEx
 	ContinueRetrievePropertiesExResponse *ContinueRetrievePropertiesExResponse
 	CancelRetrievePropertiesExRequest    *CancelRetrievePropertiesEx
+	CreatePropertyCollectorRequest       *CreatePropertyCollector
+	CreatePropertyCollectorResponse      *CreatePropertyCollectorResponse
+	DestroyPropertyCollectorRequest      *DestroyPropertyCollector
+	DestroyPropertyCollectorResponse     *DestroyPropertyCollectorResponse
 
 	// VirtualMachine
 	PowerOnVM_Task          *PowerOnVM_Task
